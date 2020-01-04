@@ -1,0 +1,10 @@
+#!/bin/sh
+
+
+# this should cutoff Micloud
+
+echo "rerouting for Micloud"
+
+nslookup de.ot.io.mi.com| awk  '/Address / {print }'|awk '!/192.168/ {print}'|awk '!/ 127./  { print "route add -net " $3 " netmask 255.255.255.255 gw <insert nongw here> dev wlan0" }'|sh
+
+nslookup gm.iotcplatform.com | awk  '/Address / {print }'|awk '!/ 127./  {print}'|awk '!/ 192.168./ { print "route add -net " $3 " netmask 255.255.255.255 gw <insert nongw here> dev wlan0" }'|sh
